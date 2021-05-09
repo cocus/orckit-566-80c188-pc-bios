@@ -1,0 +1,7 @@
+*.img
+*.o
+*.bin
+*.map
+*.hex
+boot_fake.c
+.vscode
