@@ -70,9 +70,11 @@ _start:
     jmp root
 
 .pushsection ".bios_date", "a"
-    .ascii "11/05/17"
+    .ascii "11/05/21"
 .popsection
 
 .section .model, "a"
-    .byte 0xff
+// https://stanislavs.org/helppc/id_bytes.html
+// keep in sync with the struct at services_system_bios.c
+    .byte 0xfc
     .byte 0x00

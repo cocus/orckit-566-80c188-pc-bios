@@ -193,8 +193,6 @@ static void write_character_string(struct callregs *regs)
 
 static void video_services(struct callregs *regs)
 {
-    regs->flags &= ~CF;
-
     switch (regs->ax.h) {
         // Set video mode
         case 0x00: set_video_mode(regs); break;
@@ -219,9 +217,10 @@ static void video_services(struct callregs *regs)
             scroll_window(regs);
             break;
         }
-        // 0x08 read character and attribute at cursor, not implemented
+        // 0x08 read character and attribute at cursor, dummy character & attribute
+        case 0x08: regs->ax.x = 0x07 | 0x00; break;
         // Write character and attribute at cursor
-        case 0x09: write_character_and_attr_at_cursor(regs); write_char_at_cursor(regs); break;
+        case 0x09: write_character_and_attr_at_cursor(regs); // fallthru
         // Write character at cursor
         case 0x0a: write_char_at_cursor(regs); break;
         // 0x0B set background/border/palette, nothing to do on serial
@@ -240,7 +239,6 @@ static void video_services(struct callregs *regs)
         default:
         {
             puts("services_video: unhandled service 0x"); serial_hexnum8(regs->ax.h); cout('\n');
-            regs->flags |= CF;
         }
     }
 }

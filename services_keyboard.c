@@ -28,8 +28,6 @@ static const unsigned char scancodes[] = {
 
 static void keyboard_wait_and_read(struct callregs *regs)
 {
-    regs->flags &= ~CF;
-
     while(!cin_kbhit());
 
     regs->ax.x = cin_buf();
@@ -40,8 +38,6 @@ static void keyboard_wait_and_read(struct callregs *regs)
 static void keyboard_status(struct callregs *regs)
 {
     unsigned short c;
-
-    regs->flags &= ~CF;
 
     if (cin_kbhit())
     {
@@ -55,15 +51,12 @@ static void keyboard_status(struct callregs *regs)
 
 static void keyboard_shift_status(struct callregs *regs)
 {
-    regs->flags &= ~CF;
     regs->ax.h = 0;
     regs->ax.l = 0x20; // faked numlock
 }
 
 static void keyboard_services(struct callregs *regs)
 {
-    regs->flags |= CF;
-
     switch (regs->ax.h)
     {
         // Wait for keystroke and read

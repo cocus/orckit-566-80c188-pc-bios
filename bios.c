@@ -78,8 +78,8 @@ static void bda_init(void)
     for (i = 0; i < 256; ++i)
         writeb(0x40, i, 0);
     
-    bda_write(equipment_list_flags, 0x0041);
-    bda_write(mem_kbytes, 96);
+    bda_write(equipment_list_flags, 0x0031);
+    bda_write(mem_kbytes, 256);
 
     bda_write(video_mode, 0x03);
     bda_write(num_screen_cols, 80);

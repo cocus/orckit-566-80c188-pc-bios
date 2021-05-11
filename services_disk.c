@@ -153,7 +153,7 @@ static uint8_t _diskette_read(struct callregs *regs)
         return _set_diskette_status(INT13_STATUS_SEEK_FAILURE);
     }
 
-    puts("diskette_read lba 0x"); serial_hexnum32(lba); puts(", place into ES:BX "); serial_hexnum16(regs->es); cout(':'); serial_hexnum16(dst); puts(" (0x"); serial_hexnum32(((uint32_t)(regs->es) << 4) + dst); cout(')');
+    //puts("diskette_read lba 0x"); serial_hexnum32(lba); puts(", place into ES:BX "); serial_hexnum16(regs->es); cout(':'); serial_hexnum16(dst); puts(" (0x"); serial_hexnum32(((uint32_t)(regs->es) << 4) + dst); cout(')');
     regs->ax.l = 0;
     for (i = 0; i < count; ++i) {
         if (pf_read(regs->es, dst, 512, &read_bytes) != FR_OK) break;
@@ -163,14 +163,14 @@ static uint8_t _diskette_read(struct callregs *regs)
         ++regs->ax.l;
     }
     
-    puts(", requested 0x"); serial_hexnum16(count); puts(" sectors, read 0x"); serial_hexnum16(regs->ax.l); cout('\n');
+    //puts(", requested 0x"); serial_hexnum16(count); puts(" sectors, read 0x"); serial_hexnum16(regs->ax.l); cout('\n');
     return _set_diskette_status(INT13_STATUS_NO_ERROR);
 }
 
 
 static uint8_t _diskette_parameters(struct callregs *regs)
 {
-    puts("disk param, disk = 0x"); serial_hexnum8(regs->dx.l); cout('\n');
+    //puts("disk param, disk = 0x"); serial_hexnum8(regs->dx.l); cout('\n');
 
     // DL = number of drives attached
     regs->dx.l = 1;
